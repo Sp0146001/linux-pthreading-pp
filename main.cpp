@@ -73,3 +73,35 @@ double calculateArea(const double r, const size_t threads, const size_t tests)
   const double square_area = 4.0 * r * r;
   return (static_cast< double >(total_hits) / static_cast< double >(tests)) * square_area;
 }
+
+int main()
+{
+  double radius = 0.0;
+  size_t num_tests = 0;
+
+  if (!(std::cin >> radius >> num_tests)) {
+    std::cerr << "Error: invalid input format. Expected: <radius> <num_tests>\n";
+    return 1;
+  }
+
+  if (radius <= 0.0) {
+    std::cerr << "Error: radius must be strictly greater than 0.\n";
+    return 1;
+  }
+
+  if (num_tests == 0) {
+    std::cerr << "Error: number of tests must be greater than 0.\n";
+    return 1;
+  }
+
+  constexpr size_t num_threads = 4;
+
+  const double result = calculateArea(radius, num_threads, num_tests);
+  const double expected = std::acos(-1.0) * radius * radius;
+
+  std::cout << "monte-carlo " << result << "\n";
+  std::cout << "expected " << expected << "\n";
+  std::cout << "err " << std::abs(result - expected) << "\n";
+
+  return 0;
+}
