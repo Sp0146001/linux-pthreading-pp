@@ -74,22 +74,36 @@ double calculateArea(const double r, const size_t threads, const size_t tests)
   return (static_cast< double >(total_hits) / static_cast< double >(tests)) * square_area;
 }
 
-int main()
+int main(int argc, char** argv)
 {
   double radius = 0.0;
   size_t num_tests = 0;
 
-  if (!(std::cin >> radius >> num_tests)) {
-    std::cerr << "Error: invalid input format. Expected: <radius> <num_tests>\n";
-    return 1;
+  if (argc == 3)
+  {
+    try {
+      radius = std::stod(argv[1]);
+      num_tests = std::stoull(argv[2]);
+    } catch (const std::exception&) {
+      std::cerr << "Error: invalid command line arguments.\n";
+      return 1;
+    }
+  } else {
+    if (!(std::cin >> radius >> num_tests))
+    {
+      std::cerr << "Error: invalid input format. Expected: <radius> <num_tests>\n";
+      return 1;
+    }
   }
 
-  if (radius <= 0.0) {
+  if (radius <= 0.0)
+  {
     std::cerr << "Error: radius must be strictly greater than 0.\n";
     return 1;
   }
 
-  if (num_tests == 0) {
+  if (num_tests == 0)
+  {
     std::cerr << "Error: number of tests must be greater than 0.\n";
     return 1;
   }
