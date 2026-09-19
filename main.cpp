@@ -94,7 +94,7 @@ int main()
     return 1;
   }
 
-  constexpr size_t num_threads = 4;
+  constexpr size_t num_threads = 16;
 
   const double result = calculateArea(radius, num_threads, num_tests);
   const double expected = std::acos(-1.0) * radius * radius;
